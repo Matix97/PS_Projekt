@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="PS_Projekt_Od_zera:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/PS_Projekt_Od_zera_jar</output-path>
+    <root id="archive" name="PS_Projekt_Od_zera.jar">
+      <element id="module-output" name="PS_Projekt_Od_zera" />
+    </root>
+  </artifact>
+</component>
