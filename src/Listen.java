@@ -37,11 +37,19 @@ public class Listen extends Thread {
                    // System.out.println(message);
                     printIfYourRoom(message);
                 }
+                else if(message.startsWith("JOIN") || message.startsWith(("LEFT")))
+                    joinOrLeftRoomMessage(message);
 
             } catch (IOException e) {
                // System.out.println("Socket closed!");
             }
         }
+    }
+
+    private void joinOrLeftRoomMessage(String message) {
+        String splitString[]=message.split(" ");
+        if(splitString[1].equalsIgnoreCase(Main.room))
+            System.out.println(message);
     }
 
     private void printIfYourRoom(String message) {

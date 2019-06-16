@@ -26,6 +26,9 @@ public class Main {
             listen.start();
             getUniqueName(multicastSocket, group);
             chooseRoom();
+            Send sendP = new Send("JOIN "+room + " "+name, multicastSocket, group, port);
+            sendP.start();
+            sendP.join();
             System.out.println("Write a message or type \"End\" to exit");
             while (true) {
 
@@ -39,7 +42,9 @@ public class Main {
                     send.join();
                 }
             }
-
+            Send sendF = new Send("LEFT "+room + " "+name, multicastSocket, group, port);
+            sendF.start();
+            sendF.join();
 
             listen.join();
 
