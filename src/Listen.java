@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
+import java.util.ArrayList;
 
 public class Listen extends Thread {
 
@@ -9,6 +10,7 @@ public class Listen extends Thread {
     private InetAddress group;
     private int port;
     private static final int MAX_LEN = 1000;
+    private  static ArrayList<String> usersInRoom=new ArrayList<>();
 
     public Listen(MulticastSocket socket, InetAddress group, int port) {
         this.socket = socket;
@@ -39,9 +41,44 @@ public class Listen extends Thread {
                 }
                 else if(message.startsWith("JOIN") || message.startsWith(("LEFT")))
                     joinOrLeftRoomMessage(message);
+                else if(message.startsWith("WHOISE"))
+                {
+                    whoIsInMyRoom(message);
+                }
+                else if(message.startsWith("ROOM")){
+                    createCommunicatAboutRoom(message);
+                }
 
             } catch (IOException e) {
                // System.out.println("Socket closed!");
+            }
+        }
+    }
+
+    private void createCommunicatAboutRoom(String message) {
+        String splitString[]=message.split(" ");
+        if(splitString[1].equalsIgnoreCase(Main.room)){
+            usersInRoom.add(splitString[2]);
+        }
+    }
+    public void printUserInRoom()
+    {
+        System.out.println("Osoby w pokoju: ");
+        for (String s:usersInRoom ) {
+            System.out.println(" - "+s);
+        }
+        usersInRoom.clear();
+    }
+
+    private void whoIsInMyRoom(String message) {
+        String splitString[]=message.split(" ");
+        if(splitString[1].equalsIgnoreCase(Main.room)){
+            Send send = new Send("ROOM "+ Main.room+" "+Main.name, socket, group, port);
+            send.start();
+            try {
+                send.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
     }
@@ -60,6 +97,7 @@ public class Listen extends Thread {
                 System.out.print(splitString[i]+" ");
             System.out.println();
         }
+
     }
 
     void checkNicksUniqe(String message){

@@ -30,13 +30,21 @@ public class Main {
             sendP.start();
             sendP.join();
             System.out.println("Write a message or type \"End\" to exit");
+            System.out.println("If You want get to know how is currently in Your room please type \"Whoise\" (Warring: operation lasts about 10 seconds");
             while (true) {
 
                 String msg = scanner.nextLine();
                 if (msg.equalsIgnoreCase("End")) {
                     koniec = true;
                     break;
-                } else {
+                }else if(msg.equalsIgnoreCase("Whoise")){
+                    Send send = new Send("WHOISE "+room, multicastSocket, group, port);
+                    send.start();
+                    send.join();
+                    sleep(10000);
+                    listen.printUserInRoom();
+                }
+                else {
                     Send send = new Send("MSG "+name + " "+room+" " + msg, multicastSocket, group, port);
                     send.start();
                     send.join();
