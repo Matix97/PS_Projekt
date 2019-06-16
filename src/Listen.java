@@ -3,6 +3,7 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Listen extends Thread {
 
@@ -10,7 +11,7 @@ public class Listen extends Thread {
     private InetAddress group;
     private int port;
     private static final int MAX_LEN = 1000;
-    private ArrayList<String> usersInRoom=new ArrayList<>();
+    private HashSet<String> usersInRoom=new HashSet<>();
 
     public Listen(MulticastSocket socket, InetAddress group, int port) {
         this.socket = socket;
@@ -21,7 +22,7 @@ public class Listen extends Thread {
     @Override
     public void run() {
 
-        while(!Main.koniec) {
+        while(!Main.finish) {
             byte[] buffer = new byte[Listen.MAX_LEN];
             DatagramPacket datagram = new DatagramPacket(buffer, buffer.length, group, port);
             String message;

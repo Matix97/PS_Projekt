@@ -12,7 +12,7 @@ public class Main {
     private static int port = 3301;
     public static String name = " ";
     private static Scanner scanner = new Scanner(System.in);
-    public static boolean koniec = false;
+    public static boolean finish = false;
     public static boolean nickUnunique = true;
     public static String room;
     public static boolean myWhois=false;
@@ -36,7 +36,7 @@ public class Main {
 
                 String msg = scanner.nextLine();
                 if (msg.equalsIgnoreCase("End")) {
-                    koniec = true;
+                    finish = true;
                     break;
                 }else if(msg.equalsIgnoreCase("Whoise")){
                     myWhois=true;
