@@ -10,7 +10,7 @@ public class Listen extends Thread {
     private InetAddress group;
     private int port;
     private static final int MAX_LEN = 1000;
-    private  static ArrayList<String> usersInRoom=new ArrayList<>();
+    private ArrayList<String> usersInRoom=new ArrayList<>();
 
     public Listen(MulticastSocket socket, InetAddress group, int port) {
         this.socket = socket;
@@ -57,7 +57,7 @@ public class Listen extends Thread {
 
     private void createCommunicatAboutRoom(String message) {
         String splitString[]=message.split(" ");
-        if(splitString[1].equalsIgnoreCase(Main.room)){
+        if(splitString[1].equalsIgnoreCase(Main.room) && Main.myWhois==true){
             usersInRoom.add(splitString[2]);
         }
     }

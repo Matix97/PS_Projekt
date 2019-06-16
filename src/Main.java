@@ -15,6 +15,7 @@ public class Main {
     public static boolean koniec = false;
     public static boolean nickUnunique = true;
     public static String room;
+    public static boolean myWhois=false;
 
     public static void main(String[] args) {
 
@@ -38,11 +39,13 @@ public class Main {
                     koniec = true;
                     break;
                 }else if(msg.equalsIgnoreCase("Whoise")){
+                    myWhois=true;
                     Send send = new Send("WHOISE "+room, multicastSocket, group, port);
                     send.start();
                     send.join();
                     sleep(10000);
                     listen.printUserInRoom();
+                    myWhois=false;
                 }
                 else {
                     Send send = new Send("MSG "+name + " "+room+" " + msg, multicastSocket, group, port);
