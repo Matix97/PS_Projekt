@@ -11,7 +11,8 @@ public class Send extends Thread {
     private int port;
 
 
-    public Send(String msg, MulticastSocket socket, InetAddress group, int port) {
+    public Send(String msg, MulticastSocket socket, InetAddress group, int port)
+    {
         this.msg = msg;
         this.socket = socket;
         this.group = group;
@@ -19,7 +20,8 @@ public class Send extends Thread {
     }
 
     @Override
-    public void run() {
+    public void run()
+    {
         byte[] buffer = msg.getBytes();
         DatagramPacket datagram = new DatagramPacket(buffer,buffer.length,group,port);
         try {

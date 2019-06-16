@@ -10,16 +10,17 @@ public class Main {
 
     private static String ip = "239.0.0.0";
     private static int port = 3301;
-    public static String name = " ";
     private static Scanner scanner = new Scanner(System.in);
+    public static String name = " ";
+    public static String room;
     public static boolean finish = false;
     public static boolean nickUnunique = true;
-    public static String room;
     public static boolean myWhois=false;
 
-    public static void main(String[] args) {
-
-        try {
+    public static void main(String[] args)
+    {
+        try
+        {
             InetAddress group = InetAddress.getByName(ip);
             MulticastSocket multicastSocket = new MulticastSocket(port);
             multicastSocket.joinGroup(group);
@@ -32,8 +33,8 @@ public class Main {
             sendP.join();
             System.out.println("Write a message or type \"End\" to exit");
             System.out.println("If You want get to know how is currently in Your room please type \"Whoise\" (Warring: operation lasts about 10 seconds");
-            while (true) {
-
+            while (true)
+            {
                 String msg = scanner.nextLine();
                 if (msg.equalsIgnoreCase("End")) {
                     finish = true;
@@ -56,7 +57,6 @@ public class Main {
             Send sendF = new Send("LEFT "+room + " "+name, multicastSocket, group, port);
             sendF.start();
             sendF.join();
-
             listen.join();
 
         } catch (UnknownHostException e) {
@@ -70,14 +70,17 @@ public class Main {
 
     }
 
-    private static void chooseRoom() {
+    private static void chooseRoom()
+    {
         System.out.println("Podaj nazwę pokoju: ");
         room = scanner.nextLine();
     }
 
-    private static void getUniqueName(MulticastSocket multicastSocket, InetAddress group) throws InterruptedException {
+    private static void getUniqueName(MulticastSocket multicastSocket, InetAddress group) throws InterruptedException
+    {
         String tempName = "";
-        while (nickUnunique) {
+        while (nickUnunique)
+        {
             nickUnunique = false;
             System.out.println("Podaj nick: ");
             tempName = scanner.nextLine();
@@ -92,6 +95,5 @@ public class Main {
             }
         }
         name = tempName;
-
     }
 }
