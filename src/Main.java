@@ -14,6 +14,7 @@ public class Main {
     private static Scanner scanner = new Scanner(System.in);
     public static boolean koniec = false;
     public static boolean nickUnunique = true;
+    public static String room;
 
     public static void main(String[] args) {
 
@@ -24,6 +25,7 @@ public class Main {
             Listen listen = new Listen(multicastSocket, group, port);
             listen.start();
             getUniqueName(multicastSocket, group);
+            chooseRoom();
             System.out.println("Write a message or type \"End\" to exit");
             while (true) {
 
@@ -32,7 +34,7 @@ public class Main {
                     koniec = true;
                     break;
                 } else {
-                    Send send = new Send(name + ": " + msg, multicastSocket, group, port);
+                    Send send = new Send("MSG "+name + " "+room+" " + msg, multicastSocket, group, port);
                     send.start();
                     send.join();
                 }
@@ -50,6 +52,11 @@ public class Main {
         }
 
 
+    }
+
+    private static void chooseRoom() {
+        System.out.println("Podaj nazwę pokoju: ");
+        room = scanner.nextLine();
     }
 
     private static void getUniqueName(MulticastSocket multicastSocket, InetAddress group) throws InterruptedException {

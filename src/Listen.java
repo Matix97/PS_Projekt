@@ -32,11 +32,25 @@ public class Listen extends Thread {
 
                     checkNicksUniqe(message);
                 }
-                else if (!message.startsWith(Main.name))
-                    System.out.println(message);
+                else if (message.startsWith("MSG"))
+                {
+                   // System.out.println(message);
+                    printIfYourRoom(message);
+                }
+
             } catch (IOException e) {
-                System.out.println("Socket closed!");
+               // System.out.println("Socket closed!");
             }
+        }
+    }
+
+    private void printIfYourRoom(String message) {
+        String splitString[]=message.split(" ");
+        if(splitString[2].equalsIgnoreCase(Main.room)){
+            System.out.print(splitString[1]+": ");
+            for(int i=3;i<splitString.length;i++)
+                System.out.print(splitString[i]+" ");
+            System.out.println();
         }
     }
 
